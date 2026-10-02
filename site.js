@@ -3,7 +3,6 @@ const PHONE_TEL = "+19374082497";
 const EMAIL = "jason@macdoorsllc.com";
 const path = location.pathname.replace(/\/index\.html$/, "").replace(/\/$/, "");
 const isHome = path === "" || path.endsWith("/MacDoorsLLC");
-const brandName = isHome ? "Mac Doors LLC" : "Mac Doors";
 
 if (!document.querySelector("link[rel='icon']")) {
   const icon = document.createElement("link");
@@ -14,13 +13,13 @@ if (!document.querySelector("link[rel='icon']")) {
 }
 
 if (!isHome) document.title = document.title.replace("Mac Doors LLC", "Mac Doors");
-document.querySelectorAll(".brand span").forEach((el) => {
-  el.textContent = isHome ? "LLC \u00b7 Columbus and surrounding areas" : "Columbus and surrounding areas";
-});
 
 const markCss = document.createElement("style");
 markCss.textContent = `
 .brand img { display: none; }
+.brand strong { font-size: 1.05rem; letter-spacing: -0.02em; }
+.brand strong small { font-size: .62em; letter-spacing: .08em; margin-left: .35rem; font-weight: 600; vertical-align: .15em; }
+.brand span { display: block; }
 .door-mark { width: 42px; height: 42px; display: grid; align-content: center; gap: 4px; flex: none; overflow: hidden; }
 .door-mark i { display: block; height: 5px; border-radius: 1px; background: #1c2b4a; animation: door-cycle 7.5s ease-in-out infinite; }
 .door-mark i:nth-child(3) { background: #b08d57; }
@@ -40,6 +39,10 @@ markCss.textContent = `
 document.head.appendChild(markCss);
 
 document.querySelectorAll(".brand").forEach((brand) => {
+  const strong = brand.querySelector("strong");
+  if (strong) strong.innerHTML = "Mac Doors <small>LLC</small>";
+  const span = brand.querySelector("span:not(.door-mark)");
+  if (span) span.textContent = "Columbus and surrounding areas";
   if (brand.querySelector(".door-mark")) return;
   const mark = document.createElement("span");
   mark.className = "door-mark";
@@ -68,7 +71,7 @@ if (menu && links) {
 const foot = document.querySelector("footer .foot");
 if (foot) {
   foot.innerHTML = [
-    "<div><strong>" + brandName + "</strong><p>" + PHONE_DISPLAY + " \u00b7 Columbus and surrounding areas.</p></div>",
+    "<div><strong>Mac Doors LLC</strong><p>" + PHONE_DISPLAY + " \u00b7 Columbus and surrounding areas.</p></div>",
     '<div><a href="index.html">Home</a><br><a href="doors.html">New doors</a><br><a href="repair.html">Repair</a><br><a href="services.html">Services</a></div>',
     '<div><a href="about.html">About</a><br><a href="contact.html">Contact</a><br><a data-phone href="tel:' + PHONE_TEL + '">Call</a><br><a data-email href="mailto:' + EMAIL + '">Email</a></div>'
   ].join("");
