@@ -10,6 +10,46 @@ document.querySelectorAll(".brand span").forEach((el) => {
   el.textContent = isHome ? "LLC \u00b7 Columbus and surrounding areas" : "Columbus and surrounding areas";
 });
 
+const markCss = document.createElement("style");
+markCss.textContent = `
+.brand img { display: none; }
+.door-mark { width: 42px; height: 42px; display: grid; align-content: center; gap: 4px; flex: none; }
+.door-mark i { display: block; height: 5px; border-radius: 1px; background: #1c2b4a; transform: translateY(0); }
+.door-mark i:nth-child(3) { background: #b08d57; }
+.door-mark.play i { animation: door-up 1.35s ease forwards; }
+.door-mark.play i:nth-child(4) { animation-delay: 0s; }
+.door-mark.play i:nth-child(3) { animation-delay: .12s; }
+.door-mark.play i:nth-child(2) { animation-delay: .24s; }
+.door-mark.play i:nth-child(1) { animation-delay: .36s; }
+@keyframes door-up {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(-16px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .door-mark.play i { animation: none; }
+}
+`;
+document.head.appendChild(markCss);
+
+document.querySelectorAll(".brand").forEach((brand) => {
+  if (brand.querySelector(".door-mark")) return;
+  const mark = document.createElement("span");
+  mark.className = "door-mark";
+  mark.setAttribute("aria-hidden", "true");
+  mark.innerHTML = "<i></i><i></i><i></i><i></i>";
+  const img = brand.querySelector("img");
+  if (img) img.replaceWith(mark);
+  else brand.prepend(mark);
+  const play = () => {
+    mark.classList.remove("play");
+    void mark.offsetWidth;
+    mark.classList.add("play");
+  };
+  play();
+  brand.addEventListener("mouseenter", play);
+});
+
 document.querySelectorAll("[data-phone]").forEach((el) => {
   el.textContent = PHONE_DISPLAY;
   if (el.tagName === "A") el.href = "tel:" + PHONE_TEL;
