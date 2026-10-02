@@ -22,16 +22,16 @@ const markCss = document.createElement("style");
 markCss.textContent = `
 .brand img { display: none; }
 .door-mark { width: 42px; height: 42px; display: grid; align-content: center; gap: 4px; flex: none; overflow: hidden; }
-.door-mark i { display: block; height: 5px; border-radius: 1px; background: #1c2b4a; animation: door-cycle 2.8s ease-in-out infinite; }
+.door-mark i { display: block; height: 5px; border-radius: 1px; background: #1c2b4a; animation: door-cycle 7.5s ease-in-out infinite; }
 .door-mark i:nth-child(3) { background: #b08d57; }
 .door-mark i:nth-child(4) { animation-delay: 0s; }
-.door-mark i:nth-child(3) { animation-delay: .12s; }
-.door-mark i:nth-child(2) { animation-delay: .24s; }
-.door-mark i:nth-child(1) { animation-delay: .36s; }
+.door-mark i:nth-child(3) { animation-delay: .28s; }
+.door-mark i:nth-child(2) { animation-delay: .56s; }
+.door-mark i:nth-child(1) { animation-delay: .84s; }
 @keyframes door-cycle {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  42% { transform: translateY(-18px); opacity: 0; }
-  58% { transform: translateY(-18px); opacity: 0; }
+  0%, 12% { transform: translateY(0); opacity: 1; }
+  38%, 62% { transform: translateY(-18px); opacity: 0; }
+  88%, 100% { transform: translateY(0); opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .door-mark i { animation: none; }
